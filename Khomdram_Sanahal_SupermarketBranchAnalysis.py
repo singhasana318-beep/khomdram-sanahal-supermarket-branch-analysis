@@ -19,6 +19,9 @@ st.title("Supermarket Branch Performance Analysis")
 st.caption("Data Analytics Project | 500 supplied supermarket transactions")
 st.header("Branch and City Performance")
 branch = st.multiselect("Branch", sorted(df.Branch.unique()), default=sorted(df.Branch.unique()))
+if not branch:
+    st.warning("Select at least one branch to see the analysis.")
+    st.stop()
 view = df[df.Branch.isin(branch)]
 summary = view.groupby(["Branch", "City"], as_index=False).Sales.sum().sort_values("Sales", ascending=False)
 monthly = view.groupby(["Month", "Branch"], as_index=False).Sales.sum()
